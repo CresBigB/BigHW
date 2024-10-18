@@ -157,16 +157,16 @@ static void test_by_fixed(void)
 		不显示列标
 		游戏区域为双线框，带分隔线，色块大小为2（宽度2列=1个汉字）*1（高度1行），颜色同窗口
 		色块为双框线，颜色（未完）		*/
-	gmw_init(&MyCGI, 6, 7);
+	gmw_init(&MyCGI);
 
-	gmw_set_frame_style(&MyCGI,6, 3, true);
-	gmw_set_status_line_switch(&MyCGI, TOP_STATUS_LINE, true);
-	gmw_set_status_line_switch(&MyCGI, LOWER_STATUS_LINE, true);
-	gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);		//设置额外行列
-	gmw_set_colno_switch(&MyCGI, true);											//显示列标
-	gmw_set_rowno_switch(&MyCGI, true);											//显示行标
+	//gmw_set_frame_style(&MyCGI,2, 1, false);
+	//gmw_set_status_line_switch(&MyCGI, TOP_STATUS_LINE, true);
+	//gmw_set_status_line_switch(&MyCGI, LOWER_STATUS_LINE, true);
+	//gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);		//设置额外行列
+	//gmw_set_colno_switch(&MyCGI, true);											//显示列标
+	//gmw_set_rowno_switch(&MyCGI, true);											//显示行标
 
-	if (1)
+	if (0)
 	{
 		/* 显示初始化的框架 */
 		gmw_draw_frame(&MyCGI);
@@ -203,13 +203,13 @@ static void test_by_fixed(void)
 			gmw_set_rowcol(&MyCGI, row, col);													//游戏区域6*7
 			gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);		//设置额外行列
 			gmw_set_color(&MyCGI, COLOR_BLUE, COLOR_HGREEN);						//修改窗口颜色并级联修改游戏区域、上下状态栏
-			gmw_set_font(&MyCGI, "新宋体", 16, 0);						//TrueType字体（新宋体）宽度不需要，可任意设置
-			gmw_set_frame_style(&MyCGI, 6, 3, true);				//每个色块区域宽度6列*高度3列，要分隔线
+			gmw_set_font(&MyCGI, "新宋体", 32, 16);						//TrueType字体（新宋体）宽度不需要，可任意设置
+			gmw_set_frame_style(&MyCGI, 2, 1, true);				//每个色块区域宽度6列*高度3列，要分隔线
 			gmw_set_frame_default_linetype(&MyCGI, 2);										//设置框架线型为预置值2（全部为单线）
 			gmw_set_rowno_switch(&MyCGI, true);											//显示行号
 			gmw_set_colno_switch(&MyCGI, true);											//显示列标
 			gmw_set_delay(&MyCGI, DELAY_OF_DRAW_FRAME, 0);							//画边框的延时
-			gmw_set_block_border_switch(&MyCGI, true);									//设置色块需要小边框
+			gmw_set_block_border_switch(&MyCGI, false);									//设置色块需要小边框
 
 			/* 显示框架 */
 			gmw_draw_frame(&MyCGI);
@@ -236,7 +236,7 @@ static void test_by_fixed(void)
 
 				{BDI_VALUE_END, -1, -1, NULL}			//以BDI_VALUE_END结束，一定要有!!!
 				};
-				gmw_set_delay(&MyCGI, DELAY_OF_DRAW_BLOCK, 50);		//画色块的延时
+				gmw_set_delay(&MyCGI, DELAY_OF_DRAW_BLOCK, 0);		//画色块的延时
 				int i, j;
 				for (i = 0; i < row; i++)
 					for (j = 0; j < col; j++)
@@ -250,7 +250,7 @@ static void test_by_fixed(void)
 		}
 	}
 
-	if (1)
+	if (0)
 	{
 		/* 在上面基础上继续修改：
 			游戏区域大小
@@ -286,7 +286,7 @@ static void test_by_fixed(void)
 		to_be_continued("测试3完毕", &MyCGI);
 	}
 
-	if (1)
+	if (0)
 	{
 		/* 在上面基础上继续修改：
 			游戏区域大小（特地超过了行号列标的最大可表示范围，观察后面是否是*和**）
@@ -323,7 +323,7 @@ static void test_by_fixed(void)
 		to_be_continued("测试4完毕", &MyCGI);
 	}
 
-	if (1)
+	if (0)
 	{
 		/* 在上面基础上继续修改：
 			游戏区域大小
@@ -550,7 +550,6 @@ static void test_by_input(void)
   说    明：
 ***************************************************************************/
 static void test_step_of_color_linez(CONSOLE_GRAPHICS_INFO* pColorLinez_CGI)
-
 {
 	const char* gname = "ColorLinez";
 	const int row = 8, col = 8;
@@ -741,7 +740,7 @@ static void test_step_of_color_linez(CONSOLE_GRAPHICS_INFO* pColorLinez_CGI)
 	   注：1、本例任选了一个球，实际游戏中根据鼠标/键盘动作后确定某个球
 		   2、本例中任选了结束为止，实际游戏中根据鼠标/键盘动作后确定移动到的位置
 		   3、本例中未修改内部数组的值，实际游戏中可能需要修改 */
-	gmw_set_delay(pColorLinez_CGI, DELAY_OF_BLOCK_MOVED, 200); //设置移动延时
+	gmw_set_delay(pColorLinez_CGI, DELAY_OF_BLOCK_MOVED, 10); //设置移动延时
 	gmw_move_block(pColorLinez_CGI, 2, 2, BDI_SELECTED + cl[2][2], 0, bdi, UP_TO_DOWN, 3);
 	/* 为了后续移动，更新数组的值 */
 	cl[2 + 3][2] = cl[2][2];
@@ -782,7 +781,6 @@ static void test_step_of_color_linez(CONSOLE_GRAPHICS_INFO* pColorLinez_CGI)
   说    明：
 ***************************************************************************/
 static void test_color_linez(void)
-
 {
 	CONSOLE_GRAPHICS_INFO ColorLinez_CGI; //声明一个CGI变量
 
@@ -791,7 +789,7 @@ static void test_color_linez(void)
 
 	//	gmw_set_ext_rowcol(&ColorLinez_CGI, 3, 2, 10, 10);						//注：不设置附加区域，可能导致to_be_continued打印为两行，此问题未处理（后面同）
 	gmw_set_color(&ColorLinez_CGI, COLOR_BLACK, COLOR_HWHITE);			//整个窗口颜色
-	gmw_set_font(&ColorLinez_CGI, "新宋体", 32);							//字体
+	gmw_set_font(&ColorLinez_CGI, "新宋体", 16);							//字体
 	//	gmw_set_frame_style(&ColorLinez_CGI);									//游戏主区域风格：每个色块宽2高1，有分隔线
 	gmw_set_frame_default_linetype(&ColorLinez_CGI, 2);					//游戏主区域线型：单线
 	gmw_set_frame_color(&ColorLinez_CGI, COLOR_HWHITE, COLOR_BLACK);		//游戏主区域颜色
@@ -800,12 +798,13 @@ static void test_color_linez(void)
 	//	gmw_set_status_line_switch(&ColorLinez_CGI, LOWER_STATUS_LINE);			//需要下状态栏
 	gmw_set_rowno_switch(&ColorLinez_CGI, true);							//显示行号
 	gmw_set_colno_switch(&ColorLinez_CGI, true);							//显示列标
-	gmw_set_delay(&ColorLinez_CGI, DELAY_OF_BLOCK_MOVED, BLOCK_MOVED_DELAY_MS * 3);//加大延时
+	gmw_set_delay(&ColorLinez_CGI, DELAY_OF_BLOCK_MOVED, 1);//加大延时
+	gmw_set_frame_style(&ColorLinez_CGI, 6, 3);
 
 	test_step_of_color_linez(&ColorLinez_CGI);
 
 	/* 改为无分隔线，再来一次 */
-	gmw_set_frame_style(&ColorLinez_CGI, 2, 1, false);					//游戏主区域风格：每个色块宽2高1，无分隔线
+	gmw_set_frame_style(&ColorLinez_CGI, 6, 3, false);					//游戏主区域风格：每个色块宽2高1，无分隔线
 	gmw_set_ext_rowcol(&ColorLinez_CGI, 3, 2, 10, 10);					//附加区域：上2下3，左10右10
 	gmw_set_frame_default_linetype(&ColorLinez_CGI, 1);					//游戏主区域线型：双线
 
@@ -819,8 +818,7 @@ static void test_color_linez(void)
   返 回 值：
   说    明：
 ***************************************************************************/
-static void test_step_of_magic_ball(CONSOLE_GRAPHICS_INFO* pMagicBall_CGI)
-
+static void start_magic_ball(CONSOLE_GRAPHICS_INFO* pMagicBall_CGI)
 {
 	const char* gname = "MagicBall";
 	const int row = 7, col = 7;
@@ -1043,7 +1041,7 @@ static void test_magic_ball(void)
 	gmw_set_status_line_switch(&MagicBall_CGI, TOP_STATUS_LINE, false);	//不需要上状态栏
 	gmw_set_status_line_switch(&MagicBall_CGI, LOWER_STATUS_LINE, true);	//需要下状态栏
 
-	test_step_of_magic_ball(&MagicBall_CGI);
+	start_magic_ball(&MagicBall_CGI);
 
 	/* 改为无分隔线，再来一次 */
 	gmw_set_frame_style(&MagicBall_CGI, 2, 1, false);						//游戏主区域风格：每个色块宽2高1，无分隔线
@@ -1053,7 +1051,7 @@ static void test_magic_ball(void)
 	gmw_set_status_line_switch(&MagicBall_CGI, TOP_STATUS_LINE, true);	//需要上状态栏
 	gmw_set_status_line_switch(&MagicBall_CGI, LOWER_STATUS_LINE, false);	//不需要下状态栏
 
-	test_step_of_magic_ball(&MagicBall_CGI);
+	start_magic_ball(&MagicBall_CGI);
 }
 
 /***************************************************************************
@@ -1064,7 +1062,6 @@ static void test_magic_ball(void)
   说    明：
 ***************************************************************************/
 static void test_step_of_2048(CONSOLE_GRAPHICS_INFO* pG2048_CGI)
-
 {
 	const char* gname = "2048";
 	const int row = 6, col = 5;
@@ -1716,7 +1713,7 @@ int main(int argc, char** argv)
 	test_by_fixed();
 
 	/* 用键盘输入值测试框架 */
-	test_by_input();
+	//test_by_input();
 
 	/* 用 color_linez 来测试游戏区域 */
 	test_color_linez();

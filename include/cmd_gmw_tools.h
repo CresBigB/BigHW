@@ -25,7 +25,7 @@ using namespace std;
 /* 定义延时的种类 */
 #define DELAY_OF_DRAW_FRAME		0				//画游戏主框架时的延时
 #define DELAY_OF_DRAW_BLOCK		1				//画色块时的延时
-#define DELAY_OF_BLOCK_MOVED		2			//色块移动时的延时
+#define DELAY_OF_BLOCK_MOVED	2				//色块移动时的延时
 
 #define BLOCK_MOVED_DELAY_MS		15			//色块移动的缺省延时，单位ms（其余两个缺省为0）
 
