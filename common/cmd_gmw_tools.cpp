@@ -779,9 +779,6 @@ int gmw_draw_frame(const CONSOLE_GRAPHICS_INFO* const pCGI)
 	if (pCGI->inited != CGI_INITED)
 		return -1;
 
-	//cct_setconsoleborder(pCGI->cols, pCGI->lines, -1, -1);
-
-	// 设置字体、边框、颜色，并清屏
 	cct_setcolor(pCGI->area_bgcolor, pCGI->area_fgcolor);
 	if (strcmp(pCGI->CFT.font_type, "") == 0)
 		cct_setfontsize(pCGI->CFT.font_type, pCGI->CFT.font_size_high, 0);
@@ -789,7 +786,6 @@ int gmw_draw_frame(const CONSOLE_GRAPHICS_INFO* const pCGI)
 		cct_setfontsize(pCGI->CFT.font_type, pCGI->CFT.font_size_high, pCGI->CFT.font_size_width);
 
 	cct_setconsoleborder(pCGI->cols, pCGI->lines, -1, -1);
-	//cct_setconsoleborder(50, 20, -1, -1);
 	cct_cls();
 
 	if (pCGI->draw_frame_with_col_no)
@@ -871,6 +867,7 @@ int gmw_draw_frame(const CONSOLE_GRAPHICS_INFO* const pCGI)
 			if ((j == pCGI->start_x || j == pCGI->start_x + pCGI->CFI.bwidth - 1) && i != pCGI->start_y && i != pCGI->CFI.bhigh + pCGI->start_y - 1)
 				cct_showstr(j, i, pCGI->CFI.v_normal, pCGI->CFI.bgcolor, pCGI->CFI.fgcolor);
 
+
 			if (pCGI->CFI.separator)
 			{
 				if (j != pCGI->start_x && j != pCGI->start_x + pCGI->CFI.bwidth - 1)
@@ -903,7 +900,6 @@ int gmw_draw_frame(const CONSOLE_GRAPHICS_INFO* const pCGI)
 							{
 								cct_showstr(k, i, pCGI->CFI.h_normal, pCGI->CFI.bgcolor, pCGI->CFI.fgcolor);
 								Sleep(pCGI->delay_of_draw_frame);
-
 							}
 						}
 						isNormal = !isNormal;
