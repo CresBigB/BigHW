@@ -867,7 +867,6 @@ int gmw_draw_frame(const CONSOLE_GRAPHICS_INFO* const pCGI)
 			if ((j == pCGI->start_x || j == pCGI->start_x + pCGI->CFI.bwidth - 1) && i != pCGI->start_y && i != pCGI->CFI.bhigh + pCGI->start_y - 1)
 				cct_showstr(j, i, pCGI->CFI.v_normal, pCGI->CFI.bgcolor, pCGI->CFI.fgcolor);
 
-
 			if (pCGI->CFI.separator)
 			{
 				if (j != pCGI->start_x && j != pCGI->start_x + pCGI->CFI.bwidth - 1)
