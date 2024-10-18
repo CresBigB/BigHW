@@ -28,40 +28,6 @@ using namespace std;
 		4、从对应的 lib 目录中删除 lib_tgmw_tools.lib
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-#define ENABLE_LIB_TGMW_TOOLS			 0
-
-#if ENABLE_LIB_TGMW_TOOLS
-#include "../include/lib_tgmw_tools.h"
-#define gmw_set_rowcol tgmw_set_rowcol
-#define gmw_set_color tgmw_set_color
-#define gmw_set_font tgmw_set_font
-#define gmw_set_delay tgmw_set_delay
-#define gmw_set_ext_rowcol tgmw_set_ext_rowcol
-
-#define gmw_set_frame_default_linetype tgmw_set_frame_default_linetype
-#define gmw_set_frame_linetype tgmw_set_frame_linetype
-#define gmw_set_frame_style tgmw_set_frame_style
-#define gmw_set_frame_color tgmw_set_frame_color
-
-#define gmw_set_block_default_linetype tgmw_set_block_default_linetype
-#define gmw_set_block_linetype tgmw_set_block_linetype
-#define gmw_set_block_border_switch tgmw_set_block_border_switch
-
-#define gmw_set_status_line_switch tgmw_set_status_line_switch
-#define gmw_set_status_line_color tgmw_set_status_line_color
-
-#define gmw_set_rowno_switch tgmw_set_rowno_switch
-#define gmw_set_colno_switch tgmw_set_colno_switch
-
-#define gmw_init tgmw_init
-#define gmw_print tgmw_print
-
-#define gmw_draw_frame tgmw_draw_frame
-#define gmw_status_line tgmw_status_line
-#define gmw_draw_block tgmw_draw_block
-#define gmw_move_block tgmw_move_block
-#define gmw_read_keyboard_and_mouse tgmw_read_keyboard_and_mouse
-#endif
 
 /***************************************************************************
   函数名称：
@@ -139,8 +105,42 @@ static void to_be_continued(const char* game_name, const char* prompt, const CON
   返 回 值：
   说    明：
 ***************************************************************************/
-static void test_by_fixed(void)
+#define ENABLE_LIB_TGMW_TOOLS			 0
 
+#if ENABLE_LIB_TGMW_TOOLS
+#include "../include/lib_tgmw_tools.h"
+#define gmw_set_rowcol tgmw_set_rowcol
+#define gmw_set_color tgmw_set_color
+#define gmw_set_font tgmw_set_font
+#define gmw_set_delay tgmw_set_delay
+#define gmw_set_ext_rowcol tgmw_set_ext_rowcol
+
+#define gmw_set_frame_default_linetype tgmw_set_frame_default_linetype
+#define gmw_set_frame_linetype tgmw_set_frame_linetype
+#define gmw_set_frame_style tgmw_set_frame_style
+#define gmw_set_frame_color tgmw_set_frame_color
+
+#define gmw_set_block_default_linetype tgmw_set_block_default_linetype
+#define gmw_set_block_linetype tgmw_set_block_linetype
+#define gmw_set_block_border_switch tgmw_set_block_border_switch
+
+#define gmw_set_status_line_switch tgmw_set_status_line_switch
+#define gmw_set_status_line_color tgmw_set_status_line_color
+
+#define gmw_set_rowno_switch tgmw_set_rowno_switch
+#define gmw_set_colno_switch tgmw_set_colno_switch
+
+#define gmw_init tgmw_init
+#define gmw_print tgmw_print
+
+#define gmw_draw_frame tgmw_draw_frame
+#define gmw_status_line tgmw_status_line
+#define gmw_draw_block tgmw_draw_block
+#define gmw_move_block tgmw_move_block
+#define gmw_read_keyboard_and_mouse tgmw_read_keyboard_and_mouse
+#endif
+
+static void test_by_fixed(void)
 {
 	CONSOLE_GRAPHICS_INFO MyCGI; //声明一个CGI变量
 	char temp[256];
@@ -157,7 +157,14 @@ static void test_by_fixed(void)
 		不显示列标
 		游戏区域为双线框，带分隔线，色块大小为2（宽度2列=1个汉字）*1（高度1行），颜色同窗口
 		色块为双框线，颜色（未完）		*/
-	gmw_init(&MyCGI);
+	gmw_init(&MyCGI, 6, 7);
+
+	gmw_set_frame_style(&MyCGI,6, 3, true);
+	gmw_set_status_line_switch(&MyCGI, TOP_STATUS_LINE, true);
+	gmw_set_status_line_switch(&MyCGI, LOWER_STATUS_LINE, true);
+	gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);		//设置额外行列
+	gmw_set_colno_switch(&MyCGI, true);											//显示列标
+	gmw_set_rowno_switch(&MyCGI, true);											//显示行标
 
 	if (1)
 	{
@@ -178,9 +185,9 @@ static void test_by_fixed(void)
 	{
 		/* 为了简化，不检查输入正确性，自行保证 */
 		cct_cls();
-		int sel;
-		cout << "测试2比较耗时，是否进行[0/1] : ";
-		cin >> sel;
+		int sel = 1;
+		//cout << "测试2比较耗时，是否进行[0/1] : ";
+		//cin >> sel;
 		if (sel == 1)
 		{
 			const int row = 6, col = 7;
@@ -193,16 +200,16 @@ static void test_by_fixed(void)
 				显示行号
 				显示列标
 				设置延时	*/
-			gmw_set_rowcol(&MyCGI, row, col);					//游戏区域6*7
-			gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);				//设置额外行列
-			gmw_set_color(&MyCGI, COLOR_BLUE, COLOR_HGREEN);		//修改窗口颜色并级联修改游戏区域、上下状态栏
-			gmw_set_font(&MyCGI, "新宋体", 16, 0);				//TrueType字体（新宋体）宽度不需要，可任意设置
+			gmw_set_rowcol(&MyCGI, row, col);													//游戏区域6*7
+			gmw_set_ext_rowcol(&MyCGI, 3, 4, 10, 20);		//设置额外行列
+			gmw_set_color(&MyCGI, COLOR_BLUE, COLOR_HGREEN);						//修改窗口颜色并级联修改游戏区域、上下状态栏
+			gmw_set_font(&MyCGI, "新宋体", 16, 0);						//TrueType字体（新宋体）宽度不需要，可任意设置
 			gmw_set_frame_style(&MyCGI, 6, 3, true);				//每个色块区域宽度6列*高度3列，要分隔线
-			gmw_set_frame_default_linetype(&MyCGI, 2);			//设置框架线型为预置值2（全部为单线）
-			gmw_set_rowno_switch(&MyCGI, true);					//显示行号
-			gmw_set_colno_switch(&MyCGI, true);					//显示列标
-			gmw_set_delay(&MyCGI, DELAY_OF_DRAW_FRAME, 200);		//画边框的延时
-			gmw_set_block_border_switch(&MyCGI, true);			//设置色块需要小边框
+			gmw_set_frame_default_linetype(&MyCGI, 2);										//设置框架线型为预置值2（全部为单线）
+			gmw_set_rowno_switch(&MyCGI, true);											//显示行号
+			gmw_set_colno_switch(&MyCGI, true);											//显示列标
+			gmw_set_delay(&MyCGI, DELAY_OF_DRAW_FRAME, 0);							//画边框的延时
+			gmw_set_block_border_switch(&MyCGI, true);									//设置色块需要小边框
 
 			/* 显示框架 */
 			gmw_draw_frame(&MyCGI);
